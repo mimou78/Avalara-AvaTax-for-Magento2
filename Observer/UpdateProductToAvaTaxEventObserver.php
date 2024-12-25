@@ -84,6 +84,12 @@ class UpdateProductToAvaTaxEventObserver implements ObserverInterface
         if($this->helperConfig->isProductSyncEnabled() && !empty($this->companyId))
         {
             $product = $observer->getProduct();
+
+            // Skip processing for grouped products
+            if ($product->getTypeId() === 'grouped') {
+                return true;
+            }
+            
             $data = $product->getData(); 
             $origData = $product->getOrigData(); 
             
